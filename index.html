@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cálculo de Pastagem</title>
+  <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Fazer Calculo :::</h1>
+    <form method="post" id="calculopastagem-form" action="calculo.html">
+      <table>
+        <tr>
+          <th>Parâmetro</th>
+          <th>Área Tratada</th>
+          <th>Testemunha</th>
+        </tr>
+        <tr>
+          <td>Peso da Amostra m² em (Kg)</td>
+          <td><input type="number" name="peso_amostra_area_tratada" id="peso_amostra_area_tratada" value="3.20"></td>
+          <td><input type="number" name="peso_amostra_testemunha" id="peso_amostra_testemunha" value="1.95"></td>
+        </tr>
+        <tr>
+          <td>Perdas 50%</td>
+          <td><input type="number" name="perdas_area_tratada" id="perdas_area_tratada" value="0.7"></td>
+          <td><input type="number" name="perdas_testemunha" id="perdas_testemunha" value="0.7"></td>
+        </tr>
+        <tr>
+          <td>Eficiência de Pastejo 50%</td>
+          <td><input type="number" name="eficiencia_pastejo_area_tratada" id="eficiencia_pastejo_area_tratada" value="0.6"></td>
+          <td><input type="number" name="eficiencia_pastejo_testemunha" id="eficiencia_pastejo_testemunha" value="0.6"></td>
+        </tr>
+        <tr>
+          <td>Matéria Seca 25%</td>
+          <td><input type="number" name="materia_seca_area_tratada" id="materia_seca_area_tratada" value="0.25"></td>
+          <td><input type="number" name="materia_seca_testemunha" id="materia_seca_testemunha" value="0.25"></td>
+        </tr>
+        <tr>
+          <td>Período de ocupação</td>
+          <td colspan="2"><input type="number" id="periodo_ocupacao" name="periodo_ocupacao" value="10"></td>
+        </tr>
+        <tr>
+          <td>Número de piquetes</td>
+          <td colspan="2"><input type="number" id="numero_piquetes" name="numero_piquetes" value="4"></td>
+        </tr>
+        <tr>
+          <td>Peso Vivo</td>
+          <td colspan="2"><input type="number" name="peso_vivo" id="peso_vivo" value="450"></td>
+        </tr>
+        <tr>
+          <td>Consumo Animal 2,0% PV</td>
+          <td colspan="2"><input type="number" name="consumo_animal" id="consumo_animal" value="0.02"></td>
+        </tr>
+        <tr>
+          <td>ha (m²)</td>
+          <td><input type="number" name="ha_area_tratada" id="ha_area_tratada" value="10000"></td>
+          <td><input type="number" name="ha_testemunha" id="ha_testemunha" value="10000"></td>
+        </tr>
+        <tr>
+          <td>GMD</td>
+          <td><input type="number" name="gmd_area_tratada" id="gmd_area_tratada" value="0.4" step="0.1"></td>
+          <td><input type="number" name="gmd_testemunha" id="gmd_testemunha" value="0.4" step="0.1"></td>
+        </tr>
+        <tr>
+          <td>@ ha /período das Águas</td>
+          <td id="ha_periodo_aguas_area_tratada">0</td>
+          <td id="ha_periodo_aguas_area_testemunha">0</td>
+        </tr>
+        <tr>
+          <td>R$ @</td>
+          <td colspan="2"><input type="number" name="custo" id="custo" value="220"></td>
+        </tr>
+        <tr>
+          <td>Período das águas (Dias)</td>
+          <td colspan="2"><input type="number" name="periodo_aguas" id="periodo_aguas" value="180"></td>
+        </tr>
+      </table>
+    </form>
+  </div>
+
+  <div class="container">
+    <h1>Resultado do Cálculo</h1>
+    <table>
+      <tr>
+        <th colspan="4" style="height: 50px;">Cálculo Capacidade de Suporte</th>
+      </tr>
+      <tr>
+        <td rowspan="3" style="width: 200px; height: 100px;">Cap. Sup. Área Tratada</td>
+        <td style="width: 150px; height: 100px;" id="cap_sup_area_tratada_1">0</td>
+        <td rowspan="3" style="width: 150px; height: 100px;" id="cab_ha_area_tratada">0 Cab./ha</td>
+        <td rowspan="6" style="width: 150px; height: 300px;" id="cab_ha_porcentagem">0%</td>
+      </tr>
+      <tr>
+        <td style="width: 150px; height: 100px;" id="cap_sup_area_tratada_2">0</td>
+      </tr>
+      
+    </table>
+
+    <table>
+      <tr>
+        <td rowspan="3" style="width: 200px; height: 100px;">Cap. Sup. Área Testem.</td>
+        <td style="width: 150px; height: 100px;" id="cap_sup_testemunha_1">0</td>
+        <td rowspan="3" style="width: 150px; height: 100px;" id="cab_ha_area_testemunha">0 Cab./ha</td>
+        <td rowspan="6" style="width: 150px; height: 300px;" id="cab_ha_porcentagem2">0%</td>
+      </tr>
+      <tr>
+        <td style="width: 150px; height: 100px;" id="cap_sup_testemunha_2">0</td>
+      </tr>
+    </table>
+
+    <hr>
+    <table>
+      <tr>
+        <th colspan="4">Cálculo de ganho por ha</th>
+      </tr>
+      <tr>
+        <td>Ganho 180 dias Área Tratada</td>
+        <td id="ganho_180_dias_area_tratada_valor">R$ 0</td>
+        <td rowspan="3" id="ganho_por_ha_porcentagem">0%</td>
+      </tr>
+      <tr>
+        <td>Ganho 180 dias Testemunha</td>
+        <td id="ganho_180_dias_area_testemunha_valor">R$ 0</td>
+      </tr>
+      <tr>
+        <td>Diferença</td>
+        <td id="diferenca_ganho">R$ 0</td>
+      </tr>
+    </table>
+  </div>
+  <script>
+    let timeoutId = null; // Variável para armazenar o delay
+
+    function updatePeriodoOuPiquetes(inputOrigem) {
+      const periodoInput = document.getElementById('periodo_ocupacao');
+      const piquetesInput = document.getElementById('numero_piquetes');
+
+      let periodoValue = parseInt(periodoInput.value);
+      let piquetesValue = parseInt(piquetesInput.value);
+
+      if (inputOrigem === 'piquetes') {
+        switch (piquetesValue) {
+          case 1: periodoValue = 45; break;
+          case 2: periodoValue = 30; break;
+          case 3: periodoValue = 15; break;
+          case 4: periodoValue = 10; break;
+          case 5: periodoValue = 8; break;
+          case 6: periodoValue = 6; break;
+          default: console.log('Número de piquetes não reconhecido.');
+        }
+        periodoInput.value = periodoValue;
+
+      } else if (inputOrigem === 'periodo') {
+        if (periodoValue >= 45) {
+          piquetesValue = 1;
+        } else if (periodoValue >= 30) {
+          piquetesValue = 2;
+        } else if (periodoValue >= 15) {
+          piquetesValue = 3;
+        } else if (periodoValue >= 10) {
+          piquetesValue = 4;
+        } else if (periodoValue >= 8) {
+          piquetesValue = 5;
+        } else {
+          piquetesValue = 6;
+        }
+        piquetesInput.value = piquetesValue;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const periodoInput = document.getElementById('periodo_ocupacao');
+      const piquetesInput = document.getElementById('numero_piquetes');
+
+      piquetesInput.addEventListener('input', function () {
+        clearTimeout(timeoutId); // Cancela o delay anterior
+        timeoutId = setTimeout(() => {
+          let numeroPiquetes = parseInt(piquetesInput.value);
+          if (numeroPiquetes < 1 || isNaN(numeroPiquetes)) numeroPiquetes = 1;
+          if (numeroPiquetes > 6) numeroPiquetes = 6;
+          piquetesInput.value = numeroPiquetes;
+          updatePeriodoOuPiquetes('piquetes');
+        }, 500); // Delay de 500ms para permitir edição manual
+      });
+
+      periodoInput.addEventListener('input', function () {
+        clearTimeout(timeoutId); // Cancela o delay anterior
+        timeoutId = setTimeout(() => {
+          let periodo = parseInt(periodoInput.value);
+          if (periodo < 6 || isNaN(periodo)) periodo = 6;
+          if (periodo > 45) periodo = 45;
+          periodoInput.value = periodo;
+          updatePeriodoOuPiquetes('periodo');
+        }, 900); // Delay de 900ms para permitir edição manual
+      });
+    });
+  </script>
+  <script>
+    // Função para calcular os resultados automaticamente
+    function calcularResultados() {
+      let peso_amostra_area_tratada = parseFloat(document.getElementById('peso_amostra_area_tratada').value);
+      let peso_amostra_testemunha = parseFloat(document.getElementById('peso_amostra_testemunha').value);
+      let perdas_area_tratada = parseFloat(document.getElementById('perdas_area_tratada').value);
+      let perdas_testemunha = parseFloat(document.getElementById('perdas_testemunha').value);
+      let eficiencia_pastejo_area_tratada = parseFloat(document.getElementById('eficiencia_pastejo_area_tratada').value);
+      let eficiencia_pastejo_testemunha = parseFloat(document.getElementById('eficiencia_pastejo_testemunha').value);
+      let materia_seca_area_tratada = parseFloat(document.getElementById('materia_seca_area_tratada').value);
+      let materia_seca_testemunha = parseFloat(document.getElementById('materia_seca_testemunha').value);
+      let periodo_ocupacao = parseInt(document.getElementById('periodo_ocupacao').value);
+      let numero_piquetes = parseInt(document.getElementById('numero_piquetes').value);
+      let peso_vivo = parseFloat(document.getElementById('peso_vivo').value);
+      let consumo_animal = parseFloat(document.getElementById('consumo_animal').value);
+      let ha_area_tratada = parseFloat(document.getElementById('ha_area_tratada').value);
+      let ha_testemunha = parseFloat(document.getElementById('ha_testemunha').value);
+
+  
+      // Cálculos de capacidade de suporte
+      let cap_sup_area_tratada_1 = peso_amostra_area_tratada * perdas_area_tratada * eficiencia_pastejo_area_tratada * materia_seca_area_tratada * ha_area_tratada;
+      let cap_sup_area_tratada_2 = periodo_ocupacao * (peso_vivo * consumo_animal);
+      let cap_sup_testemunha_1 = peso_amostra_testemunha * perdas_testemunha * eficiencia_pastejo_testemunha * materia_seca_testemunha * ha_testemunha;
+      let cap_sup_testemunha_2 = periodo_ocupacao * (peso_vivo * consumo_animal);
+      let cab_ha_area_tratada = (cap_sup_area_tratada_1 / cap_sup_area_tratada_2) / numero_piquetes;
+      let cab_ha_area_testemunha = (cap_sup_testemunha_1 / cap_sup_testemunha_2) / numero_piquetes;
+      let cab_ha_porcentagem = 1 - (cab_ha_area_testemunha / cab_ha_area_tratada);
+
+      // Atualizando os resultados na página
+      document.getElementById('cap_sup_area_tratada_1').innerText = cap_sup_area_tratada_1.toFixed(2);
+      document.getElementById('cap_sup_area_tratada_2').innerText = cap_sup_area_tratada_2.toFixed(2);
+      document.getElementById('cap_sup_testemunha_1').innerText = cap_sup_testemunha_1.toFixed(2);
+      document.getElementById('cap_sup_testemunha_2').innerText = cap_sup_testemunha_2.toFixed(2);
+      document.getElementById('cab_ha_area_tratada').innerText = cab_ha_area_tratada.toFixed(2) + ' Cab./ha';
+      document.getElementById('cab_ha_area_testemunha').innerText = cab_ha_area_testemunha.toFixed(2) + ' Cab./ha';
+      document.getElementById('cab_ha_porcentagem').innerText = (cab_ha_porcentagem * 100).toFixed() + '%';
+      document.getElementById('cab_ha_porcentagem2').innerText = (cab_ha_porcentagem * 100).toFixed() + '%';
+
+      // Periodo das aguas
+      let periodo_aguas = parseFloat(document.getElementById('periodo_aguas').value);
+
+      let gmd_area_tratada = parseFloat(document.getElementById('gmd_area_tratada').value);
+      let gmd_testemunha = parseFloat(document.getElementById('gmd_testemunha').value);
+
+      let ha_periodo_aguas_area_tratada = ((gmd_area_tratada * periodo_aguas) / 30) * cab_ha_area_tratada;
+      let ha_periodo_aguas_area_testemunha = ((gmd_testemunha * periodo_aguas) / 30) * cab_ha_area_testemunha;
+
+      document.getElementById('ha_periodo_aguas_area_tratada').innerText = ha_periodo_aguas_area_tratada.toFixed(1);
+      document.getElementById('ha_periodo_aguas_area_testemunha').innerText = ha_periodo_aguas_area_testemunha.toFixed(1);
+
+      // Calculo de ganho por ha
+      let custo = parseFloat(document.getElementById('custo').value);
+
+      let ganho_180_dias_area_tratada_valor = ha_periodo_aguas_area_tratada * custo;
+      let ganho_180_dias_area_testemunha_valor = ha_periodo_aguas_area_testemunha * custo;
+      let diferenca_ganho = ganho_180_dias_area_tratada_valor - ganho_180_dias_area_testemunha_valor;
+      let ganho_por_ha_porcentagem = 1 - (ganho_180_dias_area_testemunha_valor / ganho_180_dias_area_tratada_valor);
+      
+      document.getElementById('ganho_180_dias_area_tratada_valor').innerText = ganho_180_dias_area_tratada_valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      document.getElementById('ganho_por_ha_porcentagem').innerText = (ganho_por_ha_porcentagem * 100).toFixed() + '%';
+      document.getElementById('ganho_180_dias_area_testemunha_valor').innerText = ganho_180_dias_area_testemunha_valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+      document.getElementById('diferenca_ganho').innerText = diferenca_ganho.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+
+    }
+
+    // Adicionando ouvintes de evento para atualizar os resultados automaticamente
+    document.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', calcularResultados);
+    });
+
+    // Realizando o cálculo inicial com os valores predefinidos logo após o carregamento da página
+    document.addEventListener("DOMContentLoaded", calcularResultados);
+  </script>
+
+</body>
+</html>
